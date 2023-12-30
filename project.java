@@ -11,7 +11,7 @@ enum TokenType {
 
 class Token {
     TokenType type;
-    int value;  // For INTEGER tokens
+    int value;  
 
     Token(TokenType type, int value) {
         this.type = type;
@@ -30,12 +30,10 @@ class ExpressionLexer {
 
     Token getNextToken() throws ExpressionParseException {
         while (position < input.length() && Character.isWhitespace(input.charAt(position))) {
-            // Skip whitespace
             position++;
         }
 
         if (position >= input.length()) {
-            // End of file
             return new Token(TokenType.END_OF_FILE, 0);
         }
 
@@ -53,7 +51,6 @@ class ExpressionLexer {
             position++;
             return new Token(TokenType.DIVIDE, 0);
         } else if (Character.isDigit(currentChar)) {
-            // Parse integer
             int value = 0;
             while (position < input.length() && Character.isDigit(input.charAt(position))) {
                 value = value * 10 + (input.charAt(position) - '0');
@@ -61,7 +58,6 @@ class ExpressionLexer {
             }
             return new Token(TokenType.INTEGER, value);
         } else {
-            // Invalid character
             throw new ExpressionParseException("Error: Invalid character '" + currentChar + "'");
         }
     }
@@ -83,7 +79,7 @@ class ExpressionParser {
     }
 
     int parseExpression() throws ExpressionParseException {
-        int result = parseTerm(); // Parse the first term in the expression
+        int result = parseTerm(); 
 
         while (currentToken.type == TokenType.ADD || currentToken.type == TokenType.SUBTRACT) {
             Token op = currentToken;
